@@ -88,12 +88,39 @@ Now logout of your account, then log back in to test AWS MFA with your root user
 
 ![MFA code login](https://github.com/Manny-D/AWS-Security-Identity-and-Access-Management-IAM-/assets/99146530/e79d5910-1968-4a3c-916c-7ba5608837ed)
 
-
 </details>
  
 <br>  
 
 ## Creating an IAM user from the Console
+
+<details>
+<summary>Details</summary>
+
+Now we'll create an IAM user with admin privileges. We will use this user account for the remainder of the project, instead of the root user. 
+
+
+<br>
+
+</details>
+ 
+<br>
+
+
+
+## 1
+
+<details>
+<summary>Details</summary>
+
+<br>
+
+</details>
+ 
+<br>
+
+
+## 2
 
 <details>
 <summary>Details</summary>
