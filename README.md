@@ -170,14 +170,87 @@ Once logged in, you should notice the user name has changed (see top right of th
  
 <br>
 
-
-
-## 1
+## Create IAM user via the CLI
 
 <details>
 <summary>Details</summary>
 
 <br>
+
+### Create Access Keys
+
+In this section we, will be using the AWS CLI via our own computer. For the purposes of this project, we will not cover the install process, but you can find instructions on Amazon's site located [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
+
+In order to utilize the AWS CLI, we need to create <b>Access keys</b> to send programmatic calls. 
+
+<b>Note 1</b>: You can only have a maximum of 2 access keys at a time. <br>
+<b>Note 2</b>: It's against best practice to create access keys via the root account. 
+
+<br>
+
+From the AWS console, click on your login name (towards the top right) -> click on <b>Security credentials</b>.
+
+![Security credentials 2](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a708be3c-e955-45a9-a203-4d88f4594b22)
+
+Scroll down to <b>Access keys</b> and click <b>Create access key</b>.
+
+![Access keys](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/0abf5180-1181-4ef1-ac42-1c9848e96adc)
+
+On the <b>Access key best practices & alternatives</b> page under <b>Use case</b>, do the following:
+  
+![Create access key](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/85a57373-fc5d-4702-9e87-e6b7d2e95aa9)
+
+- Tick the <b>Command Line Interface (CLI)</b>.
+- Put a check in <b>I understand the above recommendation and want to proceed to create an access key</b>.
+- Click <b>Next</b>.
+
+<br>
+
+For <b>Set description tag - optional</b>, you can skip, or enter <b>For CLI access</b>, then click <b>Create access key</b>.
+
+![Tag](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/f896c206-6bb4-433c-a34f-7382a4ed0a60)
+
+Document both keys, as you will not be able to retrieve them after seeing them here. <br> 
+You may want to download the .csv file for safe keeping. <br>
+Once you have both keys saved somewhere, click <b>Done</b>. 
+
+![Access key](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/8e3c80e8-06f5-4d9a-b4ae-191ca479eba5)
+
+Now let's create some users!
+
+<br>
+
+### Create Users
+
+Open your computer's CLI and lets check to confirm the AWS CLI Version, enter:
+
+```
+aws --version
+```
+
+<b>Note</b>: I am using a Mac, so my screenshots are in iTerm2.
+
+![AWS Version](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/1470e505-d9e0-4450-9da7-009a3249f54e)
+
+To access the SecurityTeamAdmin account via the CLI, we need to configure it using the <b>Access keys</b> created above. 
+
+```
+aws configure
+```
+
+Grab those keys and in your CLI, do the following:
+
+![aws configure](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/4a13f6bf-6ab1-4c19-a05d-1689de5c621f)
+
+- <b>AWS Access Key ID</b> and <b>AWS Secret Access Key</b>: Copy / Paste the keys when prompted.
+- <b>Default region name</b>: To check, via the AWS Console, click on the State to the left of your account and you'll see it listed.
+   - eg. US East (N. Virginia) <b>us-east-1</b>
+- <b>Default output [text]</b>: Type <b>text</b>
+ 
+
+
+
+
 
 </details>
  
