@@ -170,23 +170,23 @@ Once logged in, you should notice the user name has changed (see top right of th
  
 <br>
 
-## Create IAM user via the CLI
+## Create IAM user via the AWS CLI
 
 <details>
 <summary>Details</summary>
 
 <br>
 
-### Create Access Keys
-
 In this section we, will be using the AWS CLI via our own computer. For the purposes of this project, we will not cover the install process, but you can find instructions on Amazon's site located [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
 
-In order to utilize the AWS CLI, we need to create <b>Access keys</b> to send programmatic calls. 
+In order to utilize the AWS CLI, we need to create <b>Access keys</b> to send programmatic calls from our computer. 
 
 <b>Note 1</b>: You can only have a maximum of 2 access keys at a time. <br>
 <b>Note 2</b>: It's against best practice to create access keys via the root account. 
 
 <br>
+
+### Create Access Keys
 
 From the AWS console, click on your login name (towards the top right) -> click on <b>Security credentials</b>.
 
@@ -216,13 +216,11 @@ Once you have both keys saved somewhere, click <b>Done</b>.
 
 ![Access key](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/8e3c80e8-06f5-4d9a-b4ae-191ca479eba5)
 
-Now let's create some users!
-
 <br>
 
 ### Create Users
 
-Open your computer's CLI and lets check to confirm the AWS CLI Version, enter:
+Open your computer's CLI and lets check to confirm the installed AWS CLI Version, enter:
 
 ```
 aws --version
@@ -246,10 +244,22 @@ Grab those keys and in your CLI, do the following:
 - <b>Default region name</b>: To check, via the AWS Console, click on the State to the left of your account and you'll see it listed.
    - eg. US East (N. Virginia) <b>us-east-1</b>
 - <b>Default output [text]</b>: Type <b>text</b>
- 
 
+<br>
 
+Now let's create some users! Enter the following to create a user:
 
+```
+aws iam create-user --user-name (enter username here)
+```
+
+Try the above for the users: Matt, Sarah and Deborah.
+
+![Create users](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/c2f7f019-a9cc-43b1-8c42-fd3335838489)
+
+Go back to the <b>AWS Console</b> in your browser to confirm they were created. Navigate to <b>IAM</b>, under <b>Access Management</b>, click on <b>Users</b>.
+
+![User in AWS IAM Users](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/2b55cb05-e203-4671-8b28-77a6d4ab1316)
 
 
 </details>
