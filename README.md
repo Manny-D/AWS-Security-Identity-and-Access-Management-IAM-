@@ -52,7 +52,9 @@ Login to the AWS Management Console using the (default) <b>Root user</b> option.
 
 <br>
 
-When creating a new AWS account, the intial user provsioned is the root user. It is a best practice to not use this account for daily tasks because if it gets compromised, you will likely loose access to the account, among other things! We should create another user with full admin privileges. However, for the purposes of this section of the project, we will be using the root user and will secure it with another of layer of protection by enabling AWS MFA. 
+When creating a new AWS account, the intial user provsioned is the root user. It is a best practice to not use this account for daily tasks because if it gets compromised, you will likely loose access to the account, among other things! We should create another user with full admin privileges. However, for the purposes of this section of the project, we will continue using the root user and secure it with another of layer of protection by enabling AWS MFA. 
+
+<br>
 
 Start by clicking on your Account name (towards the top right) -> click on <b>Security credentials</b>:
 
@@ -99,7 +101,7 @@ Now logout of your account, then log back in to test AWS MFA with your root user
 
 <br>
 
-To align with the best security practive of least privilege, we'll create an IAM user with admin privileges. We will use this user account for the remainder of the project, instead of the root user. 
+To align with the best security practice of least privilege, we will now create an IAM user with admin privileges to use for the remainder of the project, instead of the root user. 
 
 <br>
 
