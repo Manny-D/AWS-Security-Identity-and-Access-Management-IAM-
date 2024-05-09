@@ -376,28 +376,95 @@ Confirm the <b>AmazonS3FullAccess Policy name</b> appears. You may need to refre
 
 ![CST Summary Perm Pol](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/cc27a5d1-aa9c-4360-bb56-d2124e06bdd6)
 
-
-
+</details>
 
 <br>
+
+## Implementing IAM Policies
+
+<details>
+<summary>Details</summary>
+
+<br>
+
+<b>IAM Policies</b> define access permissions in AWS. For more granular control, you can create <b>Customer-managed</b> policies which are written in Java-Script Object Notation (JSON). If you are not familiar with JSON, you can create them via the visual editor. 
+
+In this section, we'll be creating a <b>Customer-managed</b> policy that allows Read only for IAM.
+
+<br>
+
+In the IAM Dashboard under <b>Access management</b> -> click <b>Policies</b> -> <b>Create Policy</b>.
+
+![Create policy](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/48ae69da-3b19-4877-acc4-187df4785475)
+
+We'll utilize the <b>Visual</b> editor here. Under <b>Service</b> select <b>IAM</b>.
+
+![Specify permissions - IAM](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/8f506c0c-d72c-4d84-9319-28ab89971071)
+
+Under the <b>Actions allowed</b> section that appears, expand <b>Read</b> and add a check to <b>All read actions</b>.
+
+![Access level](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/3fefd9bd-0746-4787-b191-7e3d369647e0)
+
+In the <b>Resources</b> section that appears, we can be specific on which resource(s) we want to grant Read access to. 
+
+![Resources - Specific](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/7d16e95d-2adf-4674-8ae8-f40c7fe38ebb)
+
+If you're curious as to what the JSON code looks like, scroll back to the top and click on <b>JSON</b>.
+
+![Resources - JSON ex](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/766fc13c-0d3d-4ca4-b1b4-14a9866acf29)
+
+Click the <b>Visual</b> button again -> scroll back down to the <b>Resources</b> section -> tick the <b>All</b> radio button -> click <b>Next</b>.
+
+![Resources - All](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/6c4821fe-2ab8-4988-86d1-f51ad6fc5d33)
+
+On the <b>Review and create</b> page, under <b>Policy details</b>, do the following:  
+
+![Policy - Review and create](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a83d3ed5-b6b2-487e-a25a-9a87521d2451)
+
+- <b>Policy name</b>: <b>IAMReadPolicy</b>
+- <b>Description - optional</b>: <b>Read access to IAM</b>
+- Scroll down and click on <b>Create policy</b> (not pictured)
+
+<br>
+
+Once created, on the <b>Policies</b> page -> click <b>Filter by Type</b> -> select <b>Customer managed</b>.
+
+![Post Policy Creation - Filter by Type](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/4897fe30-b0ec-41ba-ab64-2f6d29a26fe0)
+
+The <b>IAMReadPolicy</b> should be listed -> click radio button to the left of it -> click <b>Actions</b> and select Attach. 
+
+![Action Attach](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/4c006da6-f729-4b51-82fb-6dab1f6892ab)
+
+On the <b>Attach as a permissions policy</b> page, under <b>IAM Entities</b>, select <b>CloudSecurityTeam</b> -> click <b>Attach policy</b>
+
+![Attach as a permissions policy](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/c0802646-68d1-4829-9b4b-3887fa103d63)
+
+Let's confirm it was attached to the <b>CloudSecurityTeam</b> group. 
+
+In the IAM Dashboard under <b>Access management</b> -> click <b>User groups</b> -> click <b>CloudSecurityTeam</b>.
+
+![Confirm Policy Attached](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/e02ff7d0-6cbe-47b3-b45f-5e6a3f264c24)
+
+Click on the <b>Permissions</b> tab. 
+
+![IAMReadPolicy added](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/53cf6de3-394a-4961-85ac-17f571955879)
+
+Now, in addition to the <b>AmazonS3FullAccess</b> policy added earlier, we should now see the <b>Customer-managed</b> policy (<b>IAMReadPolicy</b>) we just created / attached!
+
+</details>
+
+<br>
+
 
 ## Placeholder
 
 <details>
 <summary>Details</summary>
 
- <br>
-
-
 <br>
 
 
-## Placeholder
-
-<details>
-<summary>Details</summary>
-
-<br>
+</details>
 
 <br>
 
