@@ -261,13 +261,147 @@ Go back to the <b>AWS Console</b> in your browser to confirm they were created. 
 
 ![User in AWS IAM Users](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/2b55cb05-e203-4671-8b28-77a6d4ab1316)
 
-
 </details>
  
 <br>
 
 
-## 2
+## Create IAM Groups / Add Users to those Groups
+
+<details>
+<summary>Details</summary>
+
+<br>
+
+Utilizing IAM groups allows easy management of users' permissions. Users assigned to an IAM group automatically inherit the permissions of the group. 
+
+<br>
+
+### Create IAM Group via the Console
+
+From the IAM Dashboard, under <b>Access management</b> -> click on <b>User groups</b> -> click <b>Create group</b>.
+
+![image](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/5a06eee5-e692-4652-ada4-761b183289c5)
+
+Under <b>Name the group</b>, name it <b>AdminGroup</b> and add <b>Deborah</b> and <b>SecurityTeamAdmin</b>.
+
+![Create user group](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/fb002267-c570-43d8-b366-2ad23fad61de)
+
+Under <b>Attach permissions policies - Optional</b>: 
+
+![Attach perm policies](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/5a1407c2-6b71-4276-90e8-67a0bd399f85)
+
+- Search for / put a check mark next to the </b>AdministratorAccess Policy name</b>.
+- Click <b>Create user group</b>.
+
+<br>
+
+Once created, click on <b>View group</b> or the <b>Group name</b> to view more details. 
+
+![User group created](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/344b447c-f4bc-492c-aedc-0885d810c2ad)
+
+![Group Summary](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/3c75772c-6cdd-4978-95c5-3cb372d0d3ea)
+
+If you recall, we created Deborah via the AWS CLI, so she had no permissions assigned. 
+
+Since we added her to a group, she should inherit the group's permissions. Click on her name to confirm.
+
+![Deborah Summary](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/d3c2c31e-4836-46c5-98c0-4c7fe85e6808)
+
+<br>
+
+### Create IAM Group via AWS CLI
+
+Let's create a group via the CLI that will have access to S3 buckets. 
+
+First let's create the group using the following.
+
+```
+aws iam create-group --group-name CloudSecurityTeam
+```
+
+![CST creation in AWS CLI](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/e78eeccc-b249-4bd4-9f05-47bfc47affdc)
+
+From the IAM Dashboard, under <b>Access management</b> -> <b>User groups</b> -> we should see <b>CloudSecurityTeam</b> but there are errors! 
+
+![CloudSecurityTeam Group](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/4bbec405-25e3-4cf5-b11c-e796e08ace3f)
+
+This is because we haven't assigned any Users nor Permissions as of yet. 
+
+<br>
+
+To take care of that, we'll add Matt and Sarah to that group via the AWS CLI using:
+
+```
+aws iam add-user-to-group --group-name CloudSecurityTeam --user-name (enter username here)
+```
+
+![CLI add users to CST group](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/d4d610e9-63e2-4283-9001-6fc8ec0d4b51)
+
+Check the IAM Dashboard again under <b>Access management</b> -> <b>User groups</b> -> we should see <b>CloudSecurityTeam</b> now has 2 members.
+
+![CST Members](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/bca38037-f687-4641-8e29-d79e29b7d842)
+
+Click on <b>CloudSecurityTeam Group name</b> to confirm.
+
+![CST Summary Members](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/c0706cc9-c3d9-4a63-8a1a-a60c682326dc)
+
+<br>
+
+Finally, we'll attach the S3 Full Access policy to this group. We need the policy's <b>Amazon Resource Name (ARN)</b>, which is the resource's unique identifier in AWS. 
+
+To do this, go back to the IAM Dashboard and navigate to <b>Access management</b> -> <b>Policies</b> -> filter by / search for <b>S3FullAccess</b>. 
+
+![S3 Policy](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a6722d2a-913a-4933-8e56-99914c422369)
+
+Click on <b>AmazonS3FullAccess</b> and copy the displayed <b>ARN</b>. 
+
+![S3 ARN](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/dd732a6c-5613-4575-9641-03fe688f7ce6)
+
+With that in mind, use the following command in your CLI:
+
+```
+aws iam attach-group-policy --group-name CloudSecurityTeam --policy-arn "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+```
+
+![S3 ARN CLI](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/b16656af-ba2b-4941-94ee-71e8fe34982e)
+
+Check the IAM Dashboard again under <b>Access management</b> -> <b>User groups</b> -> check the <b>CloudSecurityTeam User group</b>. You may need to refresh them.
+
+![CST Permission assigned](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/f23d1b00-503d-4674-98ff-2ab8772a6b4a)
+
+Click the <b>CloudSecurityTeam Group name</b> -> <b>Permissions</b> tab -> <b>Permissions policies</b>.
+
+Confirm the <b>AmazonS3FullAccess Policy name</b> appears. You may need to refresh for it to appear.  
+
+![CST Summary Perm Pol](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/cc27a5d1-aa9c-4360-bb56-d2124e06bdd6)
+
+
+
+
+<br>
+
+## Placeholder
+
+<details>
+<summary>Details</summary>
+
+ <br>
+
+
+<br>
+
+
+## Placeholder
+
+<details>
+<summary>Details</summary>
+
+<br>
+
+<br>
+
+## Placeholder
 
 <details>
 <summary>Details</summary>
