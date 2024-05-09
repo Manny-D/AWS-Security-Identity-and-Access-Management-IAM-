@@ -455,13 +455,54 @@ Now, in addition to the <b>AmazonS3FullAccess</b> policy added earlier, we shoul
 
 <br>
 
-
-## Placeholder
+## Create and Upload to an S3 Bucket
 
 <details>
 <summary>Details</summary>
 
 <br>
+
+A Simple Storage Service (S3) bucket is a container for objects stored in Amazon. Any number of objects can be stored in a bucket and you can have up to 100 buckets in your account. 
+
+<br>
+
+From the AWS Console search bar, search for s3 and click on <b>S3</b>.
+
+![Search S3](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/9490ee47-e6b2-4937-b3f7-2cfd9dd4cc28)
+
+Click on <b>Create bucket</b>.
+
+![Create bucket](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/546c85cd-7fc1-46bc-af86-3f27215453b7)
+
+Under <b>General configuration</b>, do the following: 
+
+![Bucket Name](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/506fa220-fd45-4a45-adcb-08c1e4526fe4)
+
+- <b>Bucket name</b>: (enter a unique name)
+- Leave all remaining section settings at their defaults
+- Scroll down and click <b>Create bucket</b> (not pictured)
+
+<br>
+
+Once created, click on the bucket <b>Name</b>.
+
+![S3 Bucket](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/c6849ad8-e284-4d7f-a19e-2b7567ede1d3)
+
+Click up <b>Upload</b>.
+
+![Upload](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/7b2f98e9-87fc-4ff2-968e-dbd2ec985818)
+
+Click <b>Add files</b> -> select any files you want to test with.
+
+![Add files](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a082bf13-887f-4c6e-b589-2c52630cdb70)
+
+Confirm your selected files are visible under <b>Files and folders</b> -> click <b>Upload</b>.
+
+![Uploaded files](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/4eb8cd39-a2be-4045-ba57-7206efbf6dc9)
+
+Great work!
+
+![Upload successful](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/9f0c2956-4a9f-439f-adaf-a3a7a14de11f)
 
 
 </details>
