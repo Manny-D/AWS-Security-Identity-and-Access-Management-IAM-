@@ -1,4 +1,4 @@
-# AWS Security in Identity and Access Management (IAM)
+# AWS Identity and Access Management (IAM) Security
 
 ![AWS IAM Header Logo](https://github.com/Manny-D/AWS-Security-Identity-and-Access-Management-IAM-/assets/99146530/64c5255b-957d-4136-9356-f5427f9ce4a4)
 
@@ -45,14 +45,14 @@ Login to the AWS Management Console using the (default) <b>Root user</b> option.
 
 <br>
 
-## Best Practice: AWS Multi-factor Authentication (MFA) for root and IAM users
+## AWS Multi-factor Authentication (MFA) for root and IAM users
 
 <details>
 <summary>Details</summary>
 
 <br>
 
-When creating a new AWS account, the intial user provsioned is the root user. It is best practice to not use this account for daily tasks because if it gets compromised, you will likely loose access to the account, among other things. We should create another user with full admin privileges. However, for the purposes of this section of the project, we will be using the root user and will secure it with another of layer of protection by enabling AWS MFA. 
+When creating a new AWS account, the intial user provsioned is the root user. It is a best practice to not use this account for daily tasks because if it gets compromised, you will likely loose access to the account, among other things! We should create another user with full admin privileges. However, for the purposes of this section of the project, we will be using the root user and will secure it with another of layer of protection by enabling AWS MFA. 
 
 Start by clicking on your Account name (towards the top right) -> click on <b>Security credentials</b>:
 
@@ -92,12 +92,74 @@ Now logout of your account, then log back in to test AWS MFA with your root user
  
 <br>  
 
-## Creating an IAM user from the Console
+## Create an IAM user from the Console
 
 <details>
 <summary>Details</summary>
 
-Now we'll create an IAM user with admin privileges. We will use this user account for the remainder of the project, instead of the root user. 
+<br>
+
+To align with the best security practive of least privilege, we'll create an IAM user with admin privileges. We will use this user account for the remainder of the project, instead of the root user. 
+
+<br>
+
+From the AWS Console search bar, type IAM and click on <b>IAM</b>.
+
+![IAM Service](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a355e551-3137-43ee-bdd8-8437a58984a0)
+
+This account doesn't have any users yet. So lets add one.
+
+![IAM Dashboard](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/8392686f-a336-4dbc-9154-de2ccd759886)
+
+On the left pane, under <b>Access management</b>, click on <b>Users</b> and on the next page, click on <b>Create user</b>.
+
+![Create user](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/1fb7daef-a7d0-40c0-b1fc-6ab0f48be16b)
+
+On the <b>Specify user details</b> page, under <b>User details</b>, do the following:
+
+![Specifiy User Details ](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/5bfd13f7-82f4-432f-a5fd-5369476b891a)
+
+- <b>User name</b>: <b>SecurityTeamAdmin</b>
+- <b>Provide user access to to the AWS Management Console - optional</b>: tick the box
+- <b>Are you providing console access to a person?</b>: tick the <b>I want to create an IAM user</b> radio button
+- <b>Console password</b>: (create a password and take note of it)
+- <b>User must create a new password at next sign-in - Recommended</b>: uncheck this box
+     - this is a best practice and should be used under normal circumstances
+- Click <b>Next</b>
+
+<br>
+
+On the <b>Set permissions</b> page, tick the <b>Attach policies directly</b> radio button.
+
+![Set permissions](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a5da3735-87e8-426c-82dd-00ec3fa5ab56)
+
+Under <b>Permissions policies</b>, select the following:
+- <b>AdministratorAccess</b>
+
+![Admin Access](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a16b9791-5a82-490b-af23-20961f516022)
+
+- <b>AWSAccountManagementFullAccess</b> and <b>IAMUserChangePassword</b> (it's faster to search for and add them), then click <b>Next</b>.
+
+![AWS Account Mgmt Full Access](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/d4266e98-c03f-4c23-afd8-8ccb0cb1f052)
+
+Review your settings and click <b>Create user</b>.
+
+![Review and create user](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/d37df096-e9a0-4a73-be7d-6016ed782fdc)
+
+Once created, be sure to note the <b>Console sign-in URL</b>, as we'll be using this to login to the AWS Console moving forward.  
+
+![User created](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/56f8c6a4-faab-4adf-81e5-2757d279fc83)
+
+Test the login of the new IAM user to confirm it's working.
+
+![IAM user test login](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/eca22b59-8c09-4e7d-81b2-4542eb625a6f)
+
+Once logged in, you should notice the user name has changed (see top right of the AWS Console).
+
+![IAM user closeup](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/b82791fb-fd66-48ad-a164-9b9a14acb0a9)
+
+![New IAM user login](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/18437b17-96d6-45cb-952f-c69b83ce0c85)
+
 
 
 <br>
