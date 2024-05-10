@@ -701,10 +701,65 @@ curl http://169.254.169.254/latest/meta-data/iam/securitycredentials/[enter Role
 <br>
 
 
-## Placeholder
+## Use IAM Roles to Grant AWS Cross-Account Access
 
 <details>
 <summary>Click to see steps</summary>
+
+<br>
+
+In this section, we'll share the resources from our account via the <b>SecurityTeamAdmin</b>, with users in another AWS Account (the 3rd party auditing firm).
+
+<b>Note</b>: The project provided another account to use. I will be using the info from my account and that one in this section. 
+
+![AuditTeamAdmin Account](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/8697d46b-12e6-4ac1-a4ac-28b53ab62e13)
+
+<br>
+
+From the <b>IAM Dashboard</b>, under <b>Access management</b> -> click on <b>Roles</b> -> click <b>Create role</b>.
+
+![Create role - 3rd Party Audit](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/57ca37ea-29be-4bda-9001-1fb8d8e428fd)
+
+<br>
+
+On the <b>Select trusted entity</b> page under <b>Trusted entity type</b>:
+
+- <b>AWS account</b>: (tick this radio button)
+
+On the <b>An AWS account</b> section under <b>Account ID</b>: 
+- <b>Another AWS account</b>: (tick this radio button)
+   - enter the 3rd party auditing firm <b>Account ID</b>
+
+Press <b>Next</b>.   
+
+![Entity Type - 3rd Party Audit](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/fda50d19-ac4f-462a-921b-7205a4679686)
+
+<br>
+
+We want to grant <b>ONLY</b> read permissions:
+- Search for <b>s3Read</b> and select it
+- Click <b>Next</b>
+
+![Permission - S3ReadOnly](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/eaf68d73-7c41-4503-a45a-38522031a918)
+
+<br>
+
+On the <b>Name, review, and create</b> page under <b>Role details</b>:
+- <b>Role name</b>: (enter in a name - eg. <b>AuditFinData</b>)
+- <b>Description</b>: (enter in something relevant - eg. see screenshot)
+- Scroll down and click <b>Create role</b> (not pictured)
+
+![Name Review Create - 3rd party audit](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/801474da-1da0-4a39-94c4-b715e12ba0e3)
+
+It should now appear in the <b>Roles</b> list.
+
+![3rd Part Audit Role created](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/c4b3e6b9-775d-448b-a97f-39d3bb60c2e4)
+
+<br>
+
+Notes about switching roles:
+- <b>AWS Management Console session duration</b>: <b>1 hour</b>
+- <b>IAM user session duration</b>: <b>12 hours</b>
 
 <br>
 
