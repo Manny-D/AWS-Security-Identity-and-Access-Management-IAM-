@@ -14,7 +14,7 @@ In this project, we are a member of the cloud security team at a financial insti
 
 If you already have an AWS Account, skip to the next part. If not, expand <b>Details</b> below to see more.
 <details>
-<summary>Details</summary>
+<summary>Click to see steps</summary>
  
 <br>  
 
@@ -48,7 +48,7 @@ Login to the AWS Management Console using the (default) <b>Root user</b> option.
 ## AWS Multi-factor Authentication (MFA) for root and IAM users
 
 <details>
-<summary>Details</summary>
+<summary>Click to see steps</summary>
 
 <br>
 
@@ -97,7 +97,7 @@ Now logout of your account, then log back in to test AWS MFA with your root user
 ## Create an IAM user from the Console
 
 <details>
-<summary>Details</summary>
+<summary>Click to see steps</summary>
 
 <br>
 
@@ -173,7 +173,7 @@ Once logged in, you should notice the user name has changed (see top right of th
 ## Create IAM user via the AWS CLI
 
 <details>
-<summary>Details</summary>
+<summary>Click to see steps</summary>
 
 <br>
 
@@ -269,7 +269,7 @@ Go back to the <b>AWS Console</b> in your browser to confirm they were created. 
 ## Create IAM Groups / Add Users to those Groups
 
 <details>
-<summary>Details</summary>
+<summary>Click to see steps</summary>
 
 <br>
 
@@ -383,7 +383,7 @@ Confirm the <b>AmazonS3FullAccess Policy name</b> appears. You may need to refre
 ## Implementing IAM Policies
 
 <details>
-<summary>Details</summary>
+<summary>Click to see steps</summary>
 
 <br>
 
@@ -458,7 +458,7 @@ Now, in addition to the <b>AmazonS3FullAccess</b> policy added earlier, we shoul
 ## Create and Upload to an S3 Bucket
 
 <details>
-<summary>Details</summary>
+<summary>Click to see steps</summary>
 
 <br>
 
@@ -511,7 +511,7 @@ Great work!
 ## Create an IAM Role for an AWS Service
 
 <details>
-<summary>Details</summary>
+<summary>Click to see steps</summary>
 
 <br>
 
@@ -560,6 +560,8 @@ The <b>EC2toS3Role</b> should now appear with the default ones.
 ### Extra Credit: Attach Role to EC2 instance
 
 We won't go through the process of spinning up an EC2 instance, as this is assumed knowledge and we'll only have it on for a short time.
+
+However, should you want to see a walkthrough, see my other project [here](https://github.com/Manny-D/Deploy-WordPress-in-AWS-EC2?tab=readme-ov-file#create-an-elastic-cloud-compute-instance), then come back to continue. 
 
 Use the following settings when creating the EC2 Instance:
 - <b>Name</b>: <b>List S3 buckets</b>
@@ -701,7 +703,7 @@ curl http://169.254.169.254/latest/meta-data/iam/securitycredentials/[enter Role
 ## Placeholder
 
 <details>
-<summary>Details</summary>
+<summary>Click to see steps</summary>
 
 <br>
 
@@ -716,7 +718,7 @@ curl http://169.254.169.254/latest/meta-data/iam/securitycredentials/[enter Role
 ## Placeholder
 
 <details>
-<summary>Details</summary>
+<summary>Click to see steps</summary>
 
 <br>
 
