@@ -13,8 +13,9 @@ In this project, we are a member of the cloud security team at a financial insti
 ## Create an Amazon Web Services Account
 
 If you already have an AWS Account, skip to the next part. If not, expand <b>Details</b> below to see more.
+
 <details>
-<summary>Click to see steps</summary>
+<summary>Details</summary>
  
 <br>  
 
@@ -52,7 +53,7 @@ Login to the AWS Management Console using the (default) <b>Root user</b> option.
 
 <br>
 
-When creating a new AWS account, the intial user provsioned is the root user. It is a best practice to not use this account for daily tasks because if it gets compromised, you will likely loose access to the account, among other things! We should create another user with full admin privileges. However, for the purposes of this section of the project, we will continue using the root user and secure it with another of layer of protection by enabling AWS MFA. 
+When creating a new AWS account, the initial user provisioned is the <b>root user</b>. It is a best practice to not use this account for daily tasks because if it gets compromised, you will likely loose access to the account, among other things! We should create another user with full admin privileges. However, for the purposes of this section of the project, we will continue using the <b>root user</b> and secure it with another of layer of protection by enabling <b>AWS MFA</b>. 
 
 <br>
 
