@@ -630,7 +630,7 @@ aws s3 ls
 
 It works, we can see the S3 Bucket created earlier!
 
-![aws s3 ls](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a8955146-3ab5-4734-b6ba-a835342e1b69)
+![aws s3 ls](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/e90992b7-f3da-4eab-91ce-48f7892bd557)
 
 <br>
 
