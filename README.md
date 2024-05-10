@@ -504,10 +504,199 @@ Great work!
 
 ![Upload successful](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/9f0c2956-4a9f-439f-adaf-a3a7a14de11f)
 
+</details>
+
+<br>
+
+## Create an IAM Role for an AWS Service
+
+<details>
+<summary>Details</summary>
+
+<br>
+
+I AM Roles can be assigned to entities you trust. They have specific permissions and are valid for a short duration. So they are considered a best practice, as they provide temprary credentials that do not need to be rotated. 
+
+<br>
+
+Navigate back to the <b>IAM Dashboard</b>, under <b>Access management</b> -> click on <b>Roles</b> -> click <b>Create role</b>.
+
+![Create role](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/298f997e-47b9-4157-bcd8-7a0ad51b76be)
+
+<b>Note</b>: 2 default Roles already exist - <b>AWS ServiceRoleForSupport</b> and <b>AWSServiceRoleForTrustedAdvisor</b>.
+
+<br>
+
+Under <b>Trusted entity type</b>, leave the default <b>AWS service</b> ticked, as we'll be communicating between 2 AWS services. 
+
+Scroll down to <b>Use case</b> -> select <b>EC2</b> -> scroll down and click <b>Next</b> (not shown). 
+
+![trusted entity - EC2](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/e268d737-bd3b-47fe-ab5b-0ec409f05796)
+
+On the <b>Add permission</b> page, under <b>Permission policies</b>, search for <b>AmazonS3FullAccess</b> -> select it -> click <b>Next</b>.
+
+![Add Permission S3FullAccess](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/d7cc5e97-4e97-48ec-8d1e-c1dc579f9933)
+
+This allows the EC2 service to communicate with the S3 service.
+
+<br>
+
+On the <b>Name, review, and create</b> page, under <b>Role details</b> do the following:
+
+![Name review and create](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/d73f9254-97ac-45e2-9fad-999a8be5d060)
+
+- <b>Role name</b>: <b>EC2toS3Role</b>
+- <b>Description</b>: (leave the default entry)
+- Scroll down and click <b>Create role</b> (not pictured)
+
+<br>
+
+The <b>EC2toS3Role</b> should now appear with the default ones. 
+
+![EC2toS3Role created](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/9112dc3c-2d17-4a8d-9790-9a439aa04488)
+
+<br> 
+
+### Extra Credit: Attach Role to EC2 instance
+
+We won't go through the process of spinning up an EC2 instance, as this is assumed knowledge and we'll only have it on for a short time.
+
+Use the following settings when creating the EC2 Instance:
+- <b>Name</b>: <b>List S3 buckets</b>
+- <b>Key pair</b>: (create one if needed)
+- All other section settings including OS and Instance type: (leave at their defaults)
+- Click <b>Launch instance</b>
+
+<br>
+
+Once created, click on the <b>Instance ID</b> -> on the next page, click on it again to get to the <b>Instance summary</b> page. 
+
+![List S3 Buckets EC2](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/0cba4ae0-51f6-4bdb-bae9-a776f0191aad)
+
+To add the role, towards the top right, click on <b>Actions</b> -> <b>Security</b> -> <b>Modify IAM role</b>.
+
+![Modify IAM role](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/0d5046dc-b7e1-48e7-b9cd-73fd1e327e87)
+
+On the <b>Modify IAM role</b> page, under <b>IAM role</b>:
+
+![IAM role](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/b384ac38-eaeb-4290-846a-8ca47aa78e81)
+
+- Click on the dropdown and select the role created above -eg. <b>EC2toS3Role</b>
+- Click <b>Update IAM role</b>
+
+<br>
+
+The <b>IAM Role</b> field should now be populated. 
+
+![List S3 Buckets EC2 with Role](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/c247082c-e3a3-437b-8bd5-ff7ee1b9d1ee)
+
+<br>
+
+### Extra Credit 2: Configuring the EC2 Instance for Metadata Querying 
+
+To prep for obtaining the metadata, click <b>Actions</b> -> <b>Instance settings</b> -> <b>Modify instance metadata options</b>.
+
+![Metadata options](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/b75b0e00-6a53-4bdb-835c-0aea3f00c710)
+
+On the <b>Modify instance metadata options</b> page, under <b>IMDSv2</b>, tick the <b>Optional Radio button</b> then click <b>Save</b>.
+
+![Modify metadata options](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/21ff2cc4-d47c-4253-b2f2-f04cacb2bb1d)
+
+Navigate back to the <b>Instance summary</b> page -> click <b>Connect</b>.
+
+![Connect](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/ca87a647-6d16-49c0-8042-3008d1f9ea01)
+
+On the <b>Connect to instance</b> page, leave the default settings and click on <b>Connect</b>.
+
+![Connect to instance - EC2 role](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/efe6454f-65c2-4ab7-b645-ad6d735c63ef)
+
+![Instance Connect - Role](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/2161f622-51a7-4926-b4cb-f37eb44fd17c)
+
+<br>
+
+### Extra Credit 3: Query EC2 Instance Metadata via <b>Instance Connect</b>
+
+The EC2 Metadata that we will be querying is the information that can be used to manage or configure the existing running instance. 
+
+The default IP address used to access metadata for all instances is <b>169.254.169.254</b>.
+
+<br>
+
+To start, let's test to see if we can acccess the S3 bucket we created earlier using:
+
+```
+aws s3 ls
+```
+
+It works, we can see the S3 Bucket created earlier!
+
+![aws s3 ls](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a8955146-3ab5-4734-b6ba-a835342e1b69)
+
+<br>
+
+Next, we'll query for the following:
+
+EC2 instance metadata: 
+
+```
+curl http://169.254.169.254/latest/meta-data/
+```
+
+![Meta-data](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/e98a0f16-d288-49eb-bb96-3337295f4d58)
+
+<br>
+
+The public host name from the EC2 instance metadata:
+
+```
+curl http://169.254.169.254/latest/meta-data/public-hostname
+```
+
+![Public-hostname](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/ab55bc4f-2427-4f17-a6f4-0f53e521dc6f)
+
+<br>
+
+The instance type from the EC2 instance metadata:
+```
+curl http://169.254.169.254/latest/meta-data/instance-type
+```
+
+![Instance-type](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/7087c91f-0a47-48d8-94ea-88847856b310)
+
+<br>
+
+The IAM information from the EC2 instance metadata:
+
+```
+curl http://169.254.169.254/latest/meta-data/iam/info
+```
+
+![IAM-info](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/bff8027e-e532-4a92-82df-6e025ceb0b22)
+
+<br>
+
+The attached IAM role name from the EC2 instance metadata:
+
+```
+curl http://169.254.169.254/latest/meta-data/iam/securitycredentials/
+```
+
+![role-name](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/cf0f902f-6413-4c48-a020-1790a9d3fd06)
+
+<br>
+
+The STS security credentials for an IAM role from the EC2 instance metadata:
+
+```
+curl http://169.254.169.254/latest/meta-data/iam/securitycredentials/[enter Role name here]
+```
+
+![Security Credential for Role Name](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/052265b9-b3c3-41bc-9162-118fde8c154d)
 
 </details>
 
 <br>
+
 
 ## Placeholder
 
@@ -516,6 +705,24 @@ Great work!
 
 <br>
 
+
+
+
 </details>
- 
+
+<br>
+
+
+## Placeholder
+
+<details>
+<summary>Details</summary>
+
+<br>
+
+
+
+
+</details>
+
 <br>
