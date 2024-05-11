@@ -708,13 +708,15 @@ curl http://169.254.169.254/latest/meta-data/iam/securitycredentials/[enter Role
 
 <br>
 
-In this section, we'll share the resources from our account via the <b>SecurityTeamAdmin</b>, with users in another AWS Account (the 3rd party auditing firm).
+In this section, we'll share the resources from our user account, <b>SecurityTeamAdmin</b>, with users in another AWS Account (eg. the 3rd party auditing firm - <b>AuditTeamAdmin</b>).
 
-<b>Note</b>: The project provided another account to use. I will be using the info from my account and that one in this section. 
+<b>Note</b>: The project provided another account to use for the 3rd party auditing firm. I will be using that account's info and the info from my account in this section. Also, we cannot be logged into 2 separate AWS Account while in the same browser. So I will be using a different web browser to log into the 3rd party auditing firm's AWS account. 
 
 ![AuditTeamAdmin Account](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/8697d46b-12e6-4ac1-a4ac-28b53ab62e13)
 
 <br>
+
+### Creating the Role for the 3rd Party
 
 From the <b>IAM Dashboard</b>, under <b>Access management</b> -> click on <b>Roles</b> -> click <b>Create role</b>.
 
@@ -746,25 +748,124 @@ We want to grant <b>ONLY</b> read permissions:
 
 On the <b>Name, review, and create</b> page under <b>Role details</b>:
 - <b>Role name</b>: (enter in a name - eg. <b>AuditFinData</b>)
+   - <b>Note</b>: (keep this handy, as we'll need it in a later step) 
 - <b>Description</b>: (enter in something relevant - eg. see screenshot)
 - Scroll down and click <b>Create role</b> (not pictured)
 
 ![Name Review Create - 3rd party audit](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/801474da-1da0-4a39-94c4-b715e12ba0e3)
 
-It should now appear in the <b>Roles</b> list.
+It should now appear in the <b>Roles</b> list. Click on the newly created role.
 
 ![3rd Part Audit Role created](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/c4b3e6b9-775d-448b-a97f-39d3bb60c2e4)
 
 <br>
 
-Notes about switching roles:
-- <b>AWS Management Console session duration</b>: <b>1 hour</b>
-- <b>IAM user session duration</b>: <b>12 hours</b>
+Here we can see a <b>Summary</b> of the newly created role. 
+
+![3rd Party Audit ARN](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/b587e8fb-ea0f-478c-9dcb-0cde3212d859)
 
 <br>
 
+### Switching roles: How the 3rd Party can access the Financial Institution account
 
+Go back to the 3rd Party Audit account, click on the <b>account name</b> -> <b>Switch role</b>
 
+![AuditTeamAdmin Account](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/f5db6d6e-7684-4de4-b75d-3eca751d0312)
+
+<br>
+
+To switch roles, we need to provide the following:
+
+![Switch Role](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/40426d1c-443e-437e-8fb6-133d68856b7d)
+
+- <b>Account ID</b>: (enter our account's id)
+- <b>IAM Role name</b>: (enter the role we created above - eg. <b>AuditFinData</b>)
+- <b>Display name - optional</b>: (enter in something, if desired - eg. <b>Audit Team</b>)
+- <b>Display color - optional</b>: (choose a color, if desired)
+- Click <b>Switch Role</b>
+
+<br>
+
+<b>Note</b>: Though I've obfuscated the <b>Account ID</b>'s for both accounts in this project / section, I've left the ends visible so you can tell them apart. For reference:
+- I'm acting as the Financial Institution, so our <b>Account ID</b>: <b>05xxxxxxxxx6</b>
+- 3rd Party Audit <b>Account Name</b> / <b>ID</b>: <b>auditteamcxxxxx</b>  / <b>76xxxxxxxx65</b>
+
+<br>
+
+### Cross-Account Access
+
+The 3rd Party Audit Account is now accessing the Financial Institution account.
+
+![Cross Account Access](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/502a32a5-015b-4544-91a7-0e48946781a7)
+
+You can already see the limits the role has imposed on this account from the <b>Access denied</b> text in the other widgets: 
+   - eg. <b>Applications</b> and <b>Cost and usage</b>.
+
+<br>
+
+To test the limitations, try navigating to another AWS Service, eg. <b>EC2</b>, and you will get something similar.
+
+![X-Account EC2 Msgs](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/9015f3b3-8fa6-489e-b312-40b3eb8e17d3)
+
+<br>
+
+Now, let's check to see if we can access the S3 bucket. Search for <b>S3</b>, click on it.
+
+The S3 bucket created in the [Create and Upload to an S3 bucket](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/blob/main/README.md#create-and-upload-to-an-s3-bucket) section (<b>projectfinancialdatademo</b>) is available and with no error(s). 
+
+Go ahead and click on it. 
+
+![Audit Team S3 Access](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/2cdbeb18-ef9b-4d9a-89ac-d9a4ab10ecd1)
+
+<br>
+
+The 2 files uploaded are available as well. I'm going to click on the <b>sample_financial_data.csv</b> file.
+
+![S3 Objects](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/c4c7718d-324d-4e0a-adb9-bb478b4c1b32)
+
+<br>
+
+It opens an <b>Object overview</b> page. Can I access it though? I'm going to click on <b>Download</b>.
+
+![S3 Object Overview](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/5ff10bf8-e2f0-4aca-9257-b6418c4edc2e)
+
+<br>
+
+It dowloads the file. I also tried <b>Open</b> and it does the same thing.
+
+![S3 Download Fin Data](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/b77d4a2c-d272-47db-8fe5-8318256b81a1)
+
+<br>
+
+So the <b>AuditFinData</b> role we created is working, as I can open / read the file. 
+
+![Accessing the file](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/5ad4700d-48b4-4ff9-9f08-8f06839cd2d2)
+
+<br>
+
+Wait, but what if I try to rename it? 
+
+![Rename](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/369b9bf9-b87c-4e9b-95b0-ff3a0b6d75d1)
+
+Denied!
+
+![Rename Fail](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/668023d1-766c-4d24-b43f-a3d4aaafa98e)
+
+<br>
+
+One last test. What if I try to <b>Upload</b> a file to the S3 bucket?!
+
+![Upload Attempt](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a576f7fa-d059-47c5-91e8-b6ef5f154c3f)
+
+You shall not pass!
+
+<br>
+
+We've now confirmed that the <b>AuditFinData</b> role has only read permissions for cross-account access. 
+
+Here are 2 noteworthy items about switching roles:
+- <b>AWS Management Console session duration</b>: <b>1 hour</b>
+- <b>IAM user session duration</b>: <b>12 hours</b>
 
 </details>
 
