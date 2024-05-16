@@ -731,8 +731,7 @@ On the <b>Select trusted entity</b> page under <b>Trusted entity type</b>:
 On the <b>An AWS account</b> section under <b>Account ID</b>: 
 - <b>Another AWS account</b>: (tick this radio button)
    - enter the 3rd party auditing firm <b>Account ID</b>
-
-Press <b>Next</b>.   
+- Press <b>Next</b>
 
 ![Entity Type - 3rd Party Audit](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/fda50d19-ac4f-462a-921b-7205a4679686)
 
@@ -866,6 +865,206 @@ We've now confirmed that the <b>AuditFinData</b> role has only read permissions 
 Here are 2 noteworthy items about switching roles:
 - <b>AWS Management Console session duration</b>: <b>1 hour</b>
 - <b>IAM user session duration</b>: <b>12 hours</b>
+
+</details>
+
+<br>
+
+## Use IAM Roles to Grant AWS Cross-Account Access with external ID
+
+<details>
+<summary>Click to see steps</summary>
+
+<br>
+
+When dealing with sensitive resources or requiring stricter control, using an <b>external ID</b> with the cross-account IAM role adds an extra layer of authentication to reduces the risk of unauthorized access, even if the temporary credentials for the cross-account IAM role gets compromised.
+
+Although the AWS Console offers role switching, it lacks a direct way to enter an external ID during role selection. So we will be utilizing our computer's CLI again. 
+
+<b>Note</b>: The project provided the Access Key ID and Secret Access Key I will be using in the CLI. Recall, my screenshot are on a Mac on iTerm. 
+
+<br>
+
+Open you computer's CLI and enter in the following to switch to the <b>AuditTeamAdmin</b> account: 
+
+```
+aws configure
+```
+
+- <b>AWS Access Key ID</b> and <b>AWS Secret Access Key</b>: Copy / Paste the keys when prompted.
+- <b>Default region name</b>: To check, via the AWS Console, click on the State to the left of your account and you'll see it listed.
+   - eg. US East (N. Virginia) <b>us-east-1</b>
+- <b>Default output [text]</b>: Type <b>text</b>
+
+![external ID CLI - switching roles](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/01f0d223-0c56-485d-b7bb-062e97165de9)
+
+<br>
+
+To confirm we switched accounts, enter the following:
+
+```
+aws sts get-caller-identity
+```
+
+![Confirmed in AuditTeamAdmin account](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/847e32b6-3223-4e17-99de-01ec1ea92119)
+
+<br>
+
+Recall we assigned <b>AuditTeamAdmin</b> account <b>AmazonS3ReadOnlyAccess</b> permissions. So if we type in the following, no S3 buckets will be returned:
+
+```
+aws s3 ls
+```
+
+![No S3](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/0efb19d2-56a4-4ef0-a0cb-99f00c502d86)
+
+<br>
+
+### Creating the Role with an external ID for the 3rd Party
+
+From the <b>IAM Dashboard</b>, under <b>Access management</b> -> click on <b>Roles</b> -> click <b>Create role</b>.
+
+![Ext ID - Create Role](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/49c342b7-b7fa-455c-ba94-4f82dfbd8747)
+
+<br>
+
+On the <b>Select trusted entity</b> page under <b>Trusted entity type</b>:
+
+![Ext ID - Trusted Entity](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/a115fb4a-de26-4d46-b453-a0b822e8f1f4)
+
+- <b>AWS account</b>: (tick this radio button)
+
+<br>
+
+On the <b>An AWS account</b> section: 
+- <b>Another AWS account</b>: (tick this radio button)
+   - enter the 3rd party auditing firm <b>Account ID</b>
+- Under <b>Options</b>,
+   - Check the <b>Require external ID (Best practive when a third party will assume this role</b> box
+   - Enter anything for the <b>External ID</b> (eg. <b>@AuditTeamExtID</b>) and note this for later, as we will need this for an upcoming CLI command
+- Press <b>Next</b>.
+  
+![Require External ID](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/e2480328-cbc8-47e1-8727-dc7078eb9200)
+
+<br>
+
+We are going to grant a <b>Customer managed</b> permission:
+- Click on the <b>Filter by Type</b> dropdown and select <b>Customer managed</b> 
+- Select the <b>S3ListAndReadPolicy</b>
+   - (<b>note</b>: this was created outside of the project)
+- Click <b>Next</b>
+
+![S3ListAndReadPolicy permission](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/12303579-8675-4e07-9516-ff191cb83239)
+
+<br>
+
+On the <b>Name, review, and create</b> page under <b>Role details</b>:
+- <b>Role name</b>: (enter in a name - eg. <b>AuditFinDataExtID</b>)
+   - <b>Note</b>: (keep this handy, as we'll need it in a later step) 
+- <b>Description</b>: (enter in something relevant - eg. see screenshot)
+- Scroll down and click <b>Create role</b> (not pictured)
+
+![Ext ID Name Review Create](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/b1949a26-35f8-4266-86e7-df24a1f0dd20)
+
+<br>
+
+It should now appear in the <b>Roles</b> list. Click on the newly created role.
+
+![Ext ID Role created](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/51a8d4d6-e016-4cb2-a29b-126b23472d9c)
+
+<br>
+
+Here we can see a <b>Summary</b> of the newly created role. Copy the ARN, as we'll need in in the next step:
+
+![Ext ID Role Summary](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/8b1df162-a524-4b7b-a2ae-39ac77247d83)
+
+<br>
+
+### Switching roles: How the 3rd Party can access the Financial Institution account via the CLI
+
+Navigate back to the CLI and do the following to obtain the keys and token to switch roles:
+
+```
+aws sts assume-role --role arn (paste the ARN copied above) --role-session-name (enter anything - eg. auditdemo) --external-id (enter external ID created earlier -eg. <b>@AuditTeamExtID</b>)
+
+```
+
+![Ext ID CLI Keys and Token](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/6eafafd9-248a-4c7b-a71a-ede4d2268a5b)
+
+<b>Note</b>: if you omit the <b>external ID</b> you will receive an error similar to this:
+
+![Ext ID CLI error](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/2270998d-9b19-4640-9a14-7457363c6e09)
+
+<br>
+
+Enter in the following obtained from the first command / screenshot above:
+- AWS Access Key
+- AWS Secret Access Key
+- AWS Session Token
+  
+```
+export AWS_ACCESS_KEY_ID=[YOUR_ACCESSKEYID]
+export AWS_SECRET_ACCESS_KEY=[YOUR_SECRETACCESSKEY]
+export AWS_SESSION_TOKEN=[YOUR_SESSIONTOKEN]
+```
+
+![Ext ID login CLI](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/32ec2d9a-1557-4149-957e-99196ff1e185)
+
+<b>Note</b>: for Windows, instead of export, use <b>set</b>:
+
+```
+set AWS_ACCESS_KEY_ID=[YOUR_ACCESSKEYID]
+set AWS_SECRET_ACCESS_KEY=[YOUR_SECRETACCESSKEY]
+set AWS_SESSION_TOKEN=[YOUR_SESSIONTOKEN]
+```
+
+<br>
+
+To confirm we've switched roles, enter the following:
+
+```
+aws sts get-caller-identity
+```
+
+![Switched to Ext ID Role](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/6fe06865-5bc1-4229-83a4-e31ae8b68e76)
+
+<br>
+
+### Cross-Account Access
+
+Now when we type in the following, the S3 bucket created earlier will be returned:
+
+```
+aws s3 ls
+```
+
+![Ext ID List S3](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/debc3289-f541-40a8-8cec-8e9996dfdf13)
+
+
+
+
+
+
+
+
+
+</details>
+
+<br>
+
+
+## Revoke an IAM Role
+
+<details>
+<summary>Click to see steps</summary>
+
+<br>
+
+If credentials to a role are compromised the role can be revoked. 
+
+
+
+
 
 </details>
 
