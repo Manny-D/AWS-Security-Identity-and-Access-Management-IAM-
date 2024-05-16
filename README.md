@@ -1066,7 +1066,7 @@ From the <b>IAM Dashboard</b>, under <b>Access management</b> -> click on <b>Rol
 On the following page, 
 - Click on the <b>Revoke sessions</b> tab
 - Click on the <b>Revoke active sessions</b> button
-- 
+  
 ![Revoke sessions tab](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/d12ec260-fc5c-4020-9fcd-7e5a23358de8)
 
 <br>
@@ -1105,8 +1105,14 @@ we'll receive the following
 
 ### Get cross-account access after a role is revoked. 
 
+To gain access again, simply generate a new <b>AWS Session Token</b> via
 
+```
+aws sts assume-role --role arn (paste the related ARN role here) --role-session-name (enter anything - eg. auditdemo) --external-id (enter external ID created earlier -eg. <b>@AuditTeamExtID</b>)
 
+```
+
+See the [Switching roles: How the 3rd Party can access the Financial Institution account via the CLI](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/blob/main/README.md#switching-roles-how-the-3rd-party-can-access-the-financial-institution-account-via-the-cli) from the [Use IAM Roles to Grant AWS Cross-Account Access with external ID](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/blob/main/README.md#use-iam-roles-to-grant-aws-cross-account-access-with-external-id) section above. 
 
 
 </details>
