@@ -881,7 +881,7 @@ When dealing with sensitive resources or requiring stricter control, using an <b
 
 Although the AWS Console offers role switching, it lacks a direct way to enter an external ID during role selection. So we will be utilizing our computer's CLI again. 
 
-<b>Note</b>: The project provided the Access Key ID and Secret Access Key I will be using in the CLI. Recall, my screenshot are on a Mac on iTerm. 
+<b>Note</b>: The project provided the Access Key ID and Secret Access Key that I will be using in the CLI. Recall, my screenshots are from iTerm in a Mac. 
 
 <br>
 
@@ -1041,13 +1041,6 @@ aws s3 ls
 ![Ext ID List S3](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/debc3289-f541-40a8-8cec-8e9996dfdf13)
 
 
-
-
-
-
-
-
-
 </details>
 
 <br>
@@ -1060,7 +1053,57 @@ aws s3 ls
 
 <br>
 
-If credentials to a role are compromised the role can be revoked. 
+If credentials to a role are compromised, active sessions utilizing the role can be revoked. 
+
+<br>
+
+From the <b>IAM Dashboard</b>, under <b>Access management</b> -> click on <b>Roles</b> -> click on any <b>Role name</b>, eg. <b>AuditFinDataExtID</b>.
+
+![Revoke Role List](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/92fcfdbb-6520-428b-bcce-5422f0023b39)
+
+<br>
+
+On the following page, 
+- Click on the <b>Revoke sessions</b> tab
+- Click on the <b>Revoke active sessions</b> button
+- 
+![Revoke sessions tab](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/d12ec260-fc5c-4020-9fcd-7e5a23358de8)
+
+<br>
+
+In the <b>Revoke active sessions?</b> popup:
+- Put a check in the <b>I acknowledge that I am revoking all active sessions for this role.</b> box
+- Click <b>Revoke active sessions</b>
+
+![Revoke Active Sessions](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/d40cdbd0-62b4-45d0-8132-8a588844a948)
+
+<br>
+
+Notice that under <b>Permissions policies</b>, there is a new one that appeared -eg. <b>AWSRevokeOlderSessions</b>.
+
+![AWSRevokeOlderSessions](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/733571bc-1477-471e-856a-87fbe1ce3dbf)
+
+<br>
+
+If you click on it, you'll see that a new Condition is added specifying any TokenIssueTime older than the Date/Time you click on <b>Revoke active sessions</b>
+
+![Revoke JSON](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/6ddb243a-99e9-47c0-9e75-bd2f4f8ad6fa)
+
+<br>
+
+If we navigate back to the CLI, and try the following (which worked in the previous section)
+
+```
+aws s3 ls
+```
+
+we'll receive the following
+
+![Revoked CLI Exp Token](https://github.com/Manny-D/Identity-and-Access-Management-IAM-Security/assets/99146530/5af5b25a-2b69-4814-8eac-411b1a38ff24)
+
+<br>
+
+### Get cross-account access after a role is revoked. 
 
 
 
